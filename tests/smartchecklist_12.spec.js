@@ -46,4 +46,3 @@ test("Validate the End-End Flow for Scenario_3 smartchecklist_12 from Botgauge S
 
   //------------------------3rd Part Completed Log out from Shift Supervisor User---------------------------//
 });
-git

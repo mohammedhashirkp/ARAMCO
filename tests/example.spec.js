@@ -17,3 +17,31 @@ test('get started link', async ({ page }) => {
   // Expects page to have a heading with the name of Installation.
   await expect(page.getByRole('heading', { name: 'Installation' })).toBeVisible();
 });
+
+
+// Code to travel from one page to another and coming back to parent Page and do the testing.
+test.only('@Child windows hadl', async ({browser})=>
+ {
+    const context = await browser.newContext();
+    const page =  await context.newPage();
+    const userName = page.locator('#username');
+    await page.goto("https://rahulshettyacademy.com/loginpagePractise/");
+    const documentLink = page.locator("[href*='documents-request']");
+ 
+    const [newPage]=await Promise.all(
+   [
+      context.waitForEvent('page'),//listen for any new page pending,rejected,fulfilled
+      documentLink.click(),
+   
+   ])//new page is opened
+   
+ 
+   const  text = await newPage.locator(".red").textContent();
+    // @ts-ignore
+    const arrayText = text.split("@")
+    const domain =  arrayText[1].split(" ")[0]
+    //console.log(domain);
+    await page.locator("#username").fill(domain);
+    console.log(await page.locator("#username").inputValue());
+ 
+ })
