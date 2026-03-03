@@ -31,13 +31,14 @@ class GroupPage {
     );
 
     this.nameCell = page.locator(
-      '//*[@id="root"]/div/div/div/main/div/div[5]/div[2]/table/tbody/tr[1]/td[4]',
+      'xpath=//*[@id="root"]/div/div/div/main/div/div[5]/div[2]/table/tbody/tr[1]/td[4]',
     );
     this.adminCell = page.locator(
-      '//*[@id="root"]/div/div/div/main/div/div[5]/div[2]/table/tbody/tr[1]/td[5]',
+      'xpath=//*[@id="root"]/div/div/div/main/div/div[5]/div[2]/table/tbody/tr[1]/td[5]',
     );
     this.statusCell = page.locator(
-      "/html/body/div/div/div/div/main/div/div[5]/div[2]/table/tbody/tr[1]/td[16]/span",
+      "xpath=/html/body/div/div/div/div/main/div/div[5]/div[2]/table/tbody/tr[1]/td[16]/span",
+      
     );
   }
 

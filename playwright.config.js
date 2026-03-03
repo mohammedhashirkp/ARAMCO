@@ -37,7 +37,15 @@ export default defineConfig({
   projects: [
     {
       name: 'chromium',
-      use: { ...devices['Desktop Chrome'] },
+      use: { ...devices['Desktop Chrome'],
+
+        headless: false,
+        screenshot: 'only-on-failure',
+        video: 'on',
+        trace: 'on-first-retry',
+        // actionTimeout: 15000,
+       },
+      
     },
 
     // {

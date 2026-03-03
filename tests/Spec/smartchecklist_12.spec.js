@@ -55,7 +55,7 @@ test("Validate the Shift Supervisor User with chceklist,Operations,CDU Functions
   await loginpage.logout();
 });
 //------------------------3rd Part Completed Log out from Shift Supervisor User---------------------------//
-test("Validate the Field Operator User with Report Findins Functions is Working as Expeced or Not? ", async ({
+test.only("Validate the Field Operator User with Report Findins Functions is Working as Expeced or Not? ", async ({
   page,
 }) => {
   const loginPages = new LoginPage(page);

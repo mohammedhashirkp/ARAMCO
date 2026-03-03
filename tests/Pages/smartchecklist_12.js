@@ -4,17 +4,17 @@ class smartchecklist_12 {
 
     // ========== LOCATORS ==========
     this.ChecklistClick = page.locator(
-      '//*[@id="root"]/div/div/aside/nav/div/button/div/span',
+      'xpath=//*[@id="root"]/div/div/aside/nav/div/button/div/span',
     );
     this.OperationsClick = page.locator(
-      '//*[@id="root"]/div/div/aside/nav/div/div/div[1]/button/span',
+      'xpath=//*[@id="root"]/div/div/aside/nav/div/div/div[1]/button/span',
     );
     this.CDUClick = page.locator(
-      '//*[@id="root"]/div/div/aside/nav/div/div/div[1]/div/div[1]/button/span',
+      'xpath=//*[@id="root"]/div/div/aside/nav/div/div/div[1]/div/div[1]/button/span',
     );
 
     this.RoundChecklistoptionClick = page.locator(
-      '//*[@id="root"]/div/div/aside/nav/div/div/div[1]/div/div[1]/div/div[3]/button/span',
+      'xpath=//*[@id="root"]/div/div/aside/nav/div/div/div[1]/div/div[1]/div/div[3]/button/span',
     );
 
     this.OutsidereadingOptionClick = page.locator(
@@ -22,11 +22,11 @@ class smartchecklist_12 {
     );
 
     this.ClickonOPS_CDU_0057 = page.locator(
-      '//*[@id="root"]/div/div/div/main/div/div[5]/div[2]/table/tbody/tr[7]/td[2]/div[1]',
+      'xpath=//*[@id="root"]/div/div/div/main/div/div[5]/div[2]/table/tbody/tr[7]/td[2]/div[1]',
     );
 
     this.ClickonReportFinding = page.locator(
-      '//*[@id="root"]/div/div/div/main/div/div[2]/div[2]/div[2]/div/div[3]/div[2]/table/tbody/tr[1]/td[2]/button/svg/path[1]',
+      'xpath=//*[@id="root"]/div/div/div/main/div/div[2]/div[2]/div[2]/div/div[3]/div[2]/table/tbody/tr[1]/td[2]/button/svg/path[1]',
     );
 
     this.ClickonDropdown = page.locator(
@@ -152,7 +152,7 @@ class smartchecklist_12 {
   }
 
   async ShiftSupervisorFunctions() {
-    await this.TableSearch.hover();
+    await this.TableSearch.click();
     await this.TableSearch.fill("OPS-CDU-3.2-0053");
     await this.TableSearch.press("Enter");
     await this.send_for_Approval.click();
@@ -175,7 +175,7 @@ class smartchecklist_12 {
   //Foreman Functionalities Method.
   async AutomationOperationFormanFunctionalities() {
     await this.Search.fill("ops-cdu-3.2-0001");
-    await this.locator.press("Enter");
+    await this.page.keyboard.press("Enter");
     await this.SCHButton.click();
     await this.Btn1.click();
     await this.ApprvandClose.click();
