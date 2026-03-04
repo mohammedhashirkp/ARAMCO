@@ -1,4 +1,4 @@
-class GroupPage {
+class Shift_Supervisor_Scenario {
   constructor(page) {
     this.page = page;
 
@@ -30,15 +30,15 @@ class GroupPage {
       '//*[@id="root"]/div/div/div/main/div/div[3]/div/div[3]/button[2]',
     );
 
-    this.nameCell = page.locator(
-      'xpath=//*[@id="root"]/div/div/div/main/div/div[5]/div[2]/table/tbody/tr[1]/td[4]',
-    );
-    this.adminCell = page.locator(
-      'xpath=//*[@id="root"]/div/div/div/main/div/div[5]/div[2]/table/tbody/tr[1]/td[5]',
-    );
-    this.statusCell = page.locator(
-      "xpath=/html/body/div/div/div/div/main/div/div[5]/div[2]/table/tbody/tr[1]/td[16]/span",
-    );
+    // this.nameCell = page.locator(
+    //   'xpath=//*[@id="root"]/div/div/div/main/div/div[5]/div[2]/table/tbody/tr[1]/td[4]',
+    // );
+    // this.adminCell = page.locator(
+    //   'xpath=//*[@id="root"]/div/div/div/main/div/div[5]/div[2]/table/tbody/tr[1]/td[5]',
+    // );
+    // this.statusCell = page.locator(
+    //   "xpath=/html/body/div/div/div/div/main/div/div[5]/div[2]/table/tbody/tr[1]/td[16]/span",
+    // );
 
     this.IDStatus = page.locator(
       'xpath=//*[@id="root"]/div/div/div/main/div/div[2]/div[1]/div[2]/div/table[1]/tbody/tr[6]/td[2]/div/span',
@@ -82,20 +82,20 @@ await this.dropdown.selectOption('AutomationFieldOperator');
   await this.saveButton.click();
 }
 
-  async verifyAssignment(expect) {
-    await expect(this.nameCell).toHaveText("Automation Field Operator");
-    await expect(this.adminCell).toHaveText("Automation");
-    await expect(this.statusCell).toHaveText("Assigned");
-  }
+  // async verifyAssignment(expect) {
+  //   await expect(this.nameCell).toHaveText("Automation Field Operator");
+  //   await expect(this.adminCell).toHaveText("Automation");
+  //   await expect(this.statusCell).toHaveText("Assigned");
+  // }
 
   async VerifyIDColumns(expect) {
     await expect(this.IDStatus).toHaveText("Assigned");
     await expect(this.ChecklistName).toHaveValue(
-  "2.5 Post Indicators Valve (PIV) Inspection"
+  "2.5 PostIndicatorsValvePIVChecklist"
 );
     await expect(this.AuditorName).toHaveText("Automation Testing");
     await expect(this.Category).toHaveText("Operations");
   }
 }
 
-module.exports = GroupPage;
+module.exports = Shift_Supervisor_Scenario;

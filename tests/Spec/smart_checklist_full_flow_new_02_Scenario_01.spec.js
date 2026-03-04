@@ -1,6 +1,6 @@
 const { test, expect } = require("@playwright/test");
 const LoginPage = require("../Pages/LoginPage");
-const GroupPage = require("../Pages/GroupPage");
+const GroupPage = require("../Pages/Shift_Supervisor_Scenario");
 
 test("Complete Login & Group Flow", async ({ page }) => {
   const loginPage = new LoginPage(page);

@@ -2,7 +2,7 @@ const { test, expect } = require("@playwright/test");
 const LoginPage = require("../Pages/LoginPage");
 const AutomationFieldOperator = require("../Pages/AutomationFieldOperator");
 
-test("Manual Field Operator Flow is working or Not ? ", async ({ page }) => {
+test("Automation Field Operator Flow is working or Not ? ", async ({ page }) => {
   const loginPage = new LoginPage(page);
   const AutomationFieldoperator = new AutomationFieldOperator(page);
 

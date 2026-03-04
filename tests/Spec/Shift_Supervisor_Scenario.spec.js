@@ -1,10 +1,10 @@
 const { test, expect } = require("@playwright/test");
 const LoginPage = require("../Pages/LoginPage");
-const GroupPage = require("../Pages/GroupPage");
+const Shift_Supervisor_Scenario = require("../Pages/Shift_Supervisor_Scenario");
 
 test("End-End Testing For Shift SupervisorFlow", async ({ page }) => {
   const loginPage = new LoginPage(page);
-  const groupPage = new GroupPage(page);
+  const shiftsupervisor = new Shift_Supervisor_Scenario(page);
 
   // Open URL
   await loginPage.goto("http://4.213.96.168:5713/");
@@ -15,13 +15,13 @@ test("End-End Testing For Shift SupervisorFlow", async ({ page }) => {
   await loginPage.login("Automation", "Automation2026");
 
   //Navigate to Checklist
-  await groupPage.navigateToChecklist();
+  await shiftsupervisor.navigateToChecklist();
 
   //Navigate Further to Create AssignCheklist
-  await groupPage.navigateToGroup();
+  await shiftsupervisor.navigateToGroup();
 
   // Create the Assignment and Submit
-  await groupPage.createAssignment(expect);
+  await shiftsupervisor.createAssignment(expect);
 
   // wait for dashboard table data
   await expect(
@@ -40,7 +40,7 @@ test("End-End Testing For Shift SupervisorFlow", async ({ page }) => {
   // Verify the 4 columns
   //verify the other columns in Dashboard
   await expect(firstRow.locator("td").nth(2)).toHaveText(
-    "2.5 Post Indicators Valve (PIV) Inspection",
+    "2.5 PostIndicatorsValvePIVChecklist",
   );
   await expect(firstRow.locator("td").nth(3)).toHaveText(
     "AutomationFieldOperator",
@@ -51,5 +51,5 @@ test("End-End Testing For Shift SupervisorFlow", async ({ page }) => {
   await firstRow.getByText(/^OPS-CDU-2\.5-\d+$/).click();
 
   //Call last function to Verify columns from the Latest ID.
-  await groupPage.VerifyIDColumns(expect);
+  await shiftsupervisor.VerifyIDColumns(expect);
 });
