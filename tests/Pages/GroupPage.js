@@ -91,7 +91,7 @@ await this.dropdown.selectOption('AutomationFieldOperator');
   async VerifyIDColumns(expect) {
     await expect(this.IDStatus).toHaveText("Assigned");
     await expect(this.ChecklistName).toHaveValue(
-  "2.5 PostIndicatorsValvePIVChecklist"
+  "2.5 Post Indicators Valve (PIV) Inspection"
 );
     await expect(this.AuditorName).toHaveText("Automation Testing");
     await expect(this.Category).toHaveText("Operations");

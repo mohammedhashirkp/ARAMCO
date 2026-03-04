@@ -40,7 +40,7 @@ test("End-End Testing For Shift SupervisorFlow", async ({ page }) => {
   // Verify the 4 columns
   //verify the other columns in Dashboard
   await expect(firstRow.locator("td").nth(2)).toHaveText(
-    "2.5 PostIndicatorsValvePIVChecklist",
+    "2.5 Post Indicators Valve (PIV) Inspection",
   );
   await expect(firstRow.locator("td").nth(3)).toHaveText(
     "AutomationFieldOperator",
