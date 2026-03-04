@@ -75,11 +75,9 @@ async createAssignment(expect) {
 
   await expect(this.dropdown).toBeVisible();
 
-  await this.dropdown.click();
+  
 
-await this.page.getByRole('option', {
-  name: 'Automation Field Operator (Field Operator)'
-}).click();
+await this.dropdown.selectOption('AutomationFieldOperator');
 
   await this.saveButton.click();
 }
