@@ -31,7 +31,7 @@ class Shift_Supervisor_InApproval_Flow {
       if (count > 0) {
         const latestRow = rows.last();
 
-        // ✅ store checklist ID
+        //store checklist ID
         this.checklistID = await latestRow.locator("td").nth(1).innerText();
 
         console.log("Selected Checklist:", this.checklistID);
@@ -51,6 +51,7 @@ class Shift_Supervisor_InApproval_Flow {
   }
 
   async DropdownFunctionality(expect) {
+    await this.page.SendforApproval.click();
     await expect(this.dropdown).toBeVisible();
     await this.page.dropdown.click();
     await this.dropdown.selectOption("Automation  Operation foreman");
@@ -69,13 +70,13 @@ class Shift_Supervisor_InApproval_Flow {
 
   async validateChecklistStatus(expectedStatus) {
     while (true) {
-      // ✅ find row using stored checklist ID
+      //find row using stored checklist ID
       const row = this.page
         .locator("table tbody tr")
         .filter({ hasText: this.checklistID });
 
       if ((await row.count()) > 0) {
-        // ✅ validate status column
+        //validate status column
         await expect(
           row.locator("td").nth(4), // status column
         ).toHaveText(expectedStatus);
