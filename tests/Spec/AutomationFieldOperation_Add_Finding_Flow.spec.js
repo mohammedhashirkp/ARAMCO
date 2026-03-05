@@ -16,7 +16,41 @@ test("Automation Field Operation Add Finding Flow Working or not ? ", async ({ p
   // Login as Admin
   await loginPage.login("AutomationFieldOperator", "Automation2026");
 
-  await page.pause();
+   // get rows matching Automation Field Operator
+  const filteredRows = page.locator("table tbody tr", {
+  hasText: "Automation Field Operator",
+  has: page.getByRole("button", { name: "View" }),
+});
+
+  // ensure at least one exists
+  await expect(filteredRows.first()).toBeVisible();
+
+  // latest matching row (top row)
+  const latestRow = filteredRows.first();
+  // get ID text
+  const latestId = await latestRow.locator("td").nth(1).innerText();
+  // remove newline + extra value
+   const latestIdnew = latestId.split("\n")[0].trim();
+
+  console.log("Latest ID:", latestIdnew);
+
+  // click ID
+  await latestRow.locator("td").nth(1).click();
+// Uplod Button and adding image.
+  await AutomationFieldOperationAddFinding.UploadFunctionality();
+
+  //UploadingPhoto
+ await AutomationFieldOperationAddFinding.UploadBtnPhotoFunction();
+
+  //Uploading Vidoe
+ await AutomationFieldOperationAddFinding.UploadVideoFunction();
+
+ //Aploading Audio File
+ 
+  await AutomationFieldOperationAddFinding.AudioUplaodFunctionality();
+
+  
+
 
 
 

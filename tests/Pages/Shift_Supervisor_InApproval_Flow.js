@@ -2,9 +2,9 @@ class Shift_Supervisor_InApproval_Flow {
   constructor(page) {
     this.page = page;
 
-    this.SendForApproval = page.locator(
-      'xpath=//*[@id="root"]/div/div/div/main/div/div[2]/div[5]/button[5]/svg',
-    );
+    this.SendForApproval = page.getByRole("button", {
+      name: "Send for Approval",
+    });
     //click on the dropdown
     this.dropdown = page.locator(
       'xpath=//*[@id="root"]/div/div/div/main/div/div[2]/div[7]/div/div[1]/div[1]/select',
@@ -17,6 +17,11 @@ class Shift_Supervisor_InApproval_Flow {
     this.SendforApprovalButton = page.locator(
       'xpath=//*[@id="root"]/div/div/div/main/div/div[2]/div[7]/div/div[2]/button[2]',
     );
+
+  this.SearchInputBar = page.locator(
+      'xpath=//*[@id="root"]/div/div/div/main/div/div[5]/div[1]/div[1]/div[1]/input',
+    );
+    
   }
 
   async SelecttheChecklistID() {
@@ -38,7 +43,7 @@ class Shift_Supervisor_InApproval_Flow {
 
         await latestRow.locator("td").nth(1).click();
 
-        break;
+        return this.checklistID; // ✅ RETURN ID
       }
 
       const nextButton = this.page.getByRole("button", { name: ">" });
@@ -50,50 +55,87 @@ class Shift_Supervisor_InApproval_Flow {
     }
   }
 
+//--------------------------------------------------------------------
+  async clickSendForApproval() {
+   await this.page.waitForTimeout(4000);
+    // ✅ Click Send For Approval and wait popup/dialog load
+    await Promise.all([
+      this.page.getByRole("heading", { name: /Send for Approval/i }).waitFor(),
+      this.SendForApproval.click(),
+    ]);
+  }
+  //---------------------------------------------------------
   async DropdownFunctionality(expect) {
-    await this.page.SendforApproval.click();
-    await expect(this.dropdown).toBeVisible();
-    await this.page.dropdown.click();
-    await this.dropdown.selectOption("Automation  Operation foreman");
-    await this.CommentBox.click();
+    await this.page.waitForTimeout(2000);
+    await this.page.waitForLoadState("networkidle");
 
-    await commentBox.fill("Approved by Supervisor");
-    await SendforApprovalButton.click();
+    // wait dialog visible
+    await expect(this.dropdown).toBeVisible();
+
+    // wait dropdown attached & enabled
+    await this.dropdown.waitFor({ state: "visible" });
+
+    // get options count
+    const options = await this.dropdown.locator("option").count();
+
+    console.log("Dropdown options count:", options);
+
+    // handle empty dropdown case
+    if (options <= 1) {
+      throw new Error("No Foreman available in dropdown");
+    }
+
+    // select second option
+    await this.dropdown.selectOption({ index: 1 });
+
+    // fill comments
+    await this.CommentBox.fill("Approved by Supervisor");
+
+    // click submit
+    await Promise.all([
+      this.page.waitForLoadState("networkidle"),
+      this.SendforApprovalButton.click(),
+    ]);
   }
 
+  //------------------------------------------------------------
   async JavascriptPopupSolve() {
-    await this.SendforReview.click();
     this.page.once("dialog", async (dialog) => {
       await dialog.accept();
     });
   }
+  //----------------------------------------------------------------------
+  
+  async searchChecklistforValidation(checklistID,expect) {
 
-  async validateChecklistStatus(expectedStatus) {
-    while (true) {
-      //find row using stored checklist ID
-      const row = this.page
-        .locator("table tbody tr")
-        .filter({ hasText: this.checklistID });
+  await this.SearchInputBar.waitFor({ state: "visible" });
 
-      if ((await row.count()) > 0) {
-        //validate status column
-        await expect(
-          row.locator("td").nth(4), // status column
-        ).toHaveText(expectedStatus);
+  const rawValue = checklistID;
 
-        console.log("Status validated successfully");
-        break;
-      }
+  const checklistIDNew = rawValue.split('\n')[0].trim();
 
-      const nextButton = this.page.getByRole("button", { name: ">" });
+  await this.SearchInputBar.fill(checklistIDNew);
 
-      if (await nextButton.isDisabled())
-        throw new Error("Checklist not found on dashboard");
+  // press Enter if search triggers on Enter
+  await this.SearchInputBar.press("Enter");
 
-      await nextButton.click();
-      await this.page.waitForLoadState("networkidle");
-    }
-  }
+   // Wait table to refresh
+  await this.page.waitForLoadState("networkidle");
+
+  //Filter by Checklist ID and Status
+  const row = this.page
+    .locator("table tbody tr")
+    .filter({ hasText: checklistIDNew })
+    .filter({ hasText: "In Approval" });
+
+  await row.first().waitFor({ state: "visible" });
+
+  // Get 15th column status
+  const statusCell = row.first().locator("td").nth(15);
+
+  // Assertion
+  await expect(statusCell).toHaveText("In Approval");
+}
 }
 
 module.exports = Shift_Supervisor_InApproval_Flow;
