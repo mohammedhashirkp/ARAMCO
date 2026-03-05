@@ -64,14 +64,13 @@ test("Automation Field Operation Add Finding Flow Working or not ? ", async ({ p
 
  await AutomationFieldOperationAddFinding.addSignature();
 
-
-
-
-
+await AutomationFieldOperationAddFinding.NextStepFunctions();
+await page.pause();
+const row = page.locator("table tbody tr", {
+  has: page.locator("td", { hasText: latestIdnew }),
 });
 
+await expect(row.locator("td").nth(14))
+  .toHaveText("Assigned with findings");
 
-  test('Draw Signature', async ({ page }) => {
-
-  
 });

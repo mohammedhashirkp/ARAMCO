@@ -74,6 +74,19 @@ class AutomationFieldOperation_Add_Finding_Flow {
 this.Signaturedraw = page.locator(
       'xpath=//*[@id="root"]/div/div/div/main/div/div[2]/div[3]/div[1]/div[2]/div/div/div[4]/div[2]/canvas',
     );
+
+this.submitSignature = page.locator(
+      'xpath=//*[@id="root"]/div/div/div/main/div/div[2]/div[3]/div[1]/div[2]/div/div/div[5]/div[3]/button[2]',
+    );
+
+    this.DashboardClick = page.locator(
+      'xpath=//*[@id="root"]/div/div/aside/nav/a[1]/span',
+    );
+
+
+    this.SaveinProgress = page.locator('xpath=//*[@id="root"]/div/div/div/main/div/div[2]/div[5]/button[2]');
+
+    
     //*[@id="root"]/div/div/div/main/div/div[2]/div[3]/div[1]/div[2]/div/div/div[4]/div[2]/canvas
 
     // Audio Button is not clickable so commented thoscodes
@@ -199,21 +212,30 @@ this.Signaturedraw = page.locator(
 
   await this.SignatureClick.click();
 
- const canvas = page.locator('canvas.w-full.h-32');
+ const canvas = this.page.locator('canvas.w-full.h-32');
   await canvas.waitFor({ state: 'visible' });
 
   const box = await canvas.boundingBox();
 
-  await page.mouse.move(box.x + 10, box.y + 50);
-  await page.mouse.down();
+  await this.page.mouse.move(box.x + 10, box.y + 50);
+  await this.page.mouse.down();
 
   for (let i = 0; i < 200; i += 10) {
-    await page.mouse.move(box.x + 10 + i, box.y + 50 + Math.sin(i / 10) * 20);
+    await this.page.mouse.move(box.x + 10 + i, box.y + 50 + Math.sin(i / 10) * 20);
   }
 
-  await page.mouse.up();
+  await this.page.mouse.up();
 
+
+  await this.submitSignature.click();
 }
+
+async NextStepFunctions(){
+  await this.SaveinProgress.click();
+await this.DashboardClick.click();
+}
+
+
 }
 
 module.exports = AutomationFieldOperation_Add_Finding_Flow;
