@@ -34,5 +34,10 @@ test("Shift Supervisor In Approval Flow Working or not ? ", async ({
   console.log("chk value :-" + checklistID);
 
   // here we validate the checklist for status update.
-  await ShiftSupervisorInApprovalFlow.searchChecklistforValidation(checklistID,expect);
+  await ShiftSupervisorInApprovalFlow.searchChecklistforValidation(
+    checklistID,
+    expect,
+  );
+
+  await loginPage.logout();
 });

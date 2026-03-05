@@ -49,9 +49,29 @@ test("Automation Field Operation Add Finding Flow Working or not ? ", async ({ p
  
   await AutomationFieldOperationAddFinding.AudioUplaodFunctionality();
 
+  //Functionality related to New findings.
+  await AutomationFieldOperationAddFinding.NewFindingsFunctionality();
+
+// Findings Photo Upload
+  await AutomationFieldOperationAddFinding.UploadBtnPhotoFunctionFindings();
+
+
+//Findings Video Uplaod
+  await AutomationFieldOperationAddFinding.UploadBtnVideoFunctionFindings();
+
+
+  // signature
+
+ await AutomationFieldOperationAddFinding.addSignature();
+
+
+
+
+
+});
+
+
+  test('Draw Signature', async ({ page }) => {
+
   
-
-
-
-
 });

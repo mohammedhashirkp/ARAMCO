@@ -57,7 +57,7 @@ class Shift_Supervisor_InApproval_Flow {
 
 //--------------------------------------------------------------------
   async clickSendForApproval() {
-   await this.page.waitForTimeout(4000);
+   await this.page.waitForLoadState('domcontentloaded');
     // ✅ Click Send For Approval and wait popup/dialog load
     await Promise.all([
       this.page.getByRole("heading", { name: /Send for Approval/i }).waitFor(),
