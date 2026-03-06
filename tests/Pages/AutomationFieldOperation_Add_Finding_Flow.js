@@ -83,8 +83,14 @@ this.submitSignature = page.locator(
       'xpath=//*[@id="root"]/div/div/aside/nav/a[1]/span',
     );
 
+     this.SubmitReviewBtn = page.locator(
+      'xpath=//*[@id="root"]/div/div/div/main/div/div[2]/div[5]/button[3]',
+    );
+
 
     this.SaveinProgress = page.locator('xpath=//*[@id="root"]/div/div/div/main/div/div[2]/div[5]/button[2]');
+
+  
 
     
     //*[@id="root"]/div/div/div/main/div/div[2]/div[3]/div[1]/div[2]/div/div/div[4]/div[2]/canvas
@@ -232,7 +238,13 @@ this.submitSignature = page.locator(
 
 async NextStepFunctions(){
   await this.SaveinProgress.click();
-await this.DashboardClick.click();
+//await this.DashboardClick.click();
+
+}
+
+async FinalReviewButtn(){
+
+  await this.SubmitReviewBtn.click();
 }
 
 

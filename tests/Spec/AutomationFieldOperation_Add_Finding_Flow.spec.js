@@ -65,12 +65,48 @@ test("Automation Field Operation Add Finding Flow Working or not ? ", async ({ p
  await AutomationFieldOperationAddFinding.addSignature();
 
 await AutomationFieldOperationAddFinding.NextStepFunctions();
-await page.pause();
+
+
+
+
+//-------------------------------test this block-----------------------------------
+
+//check the same ID Status is correct or not
 const row = page.locator("table tbody tr", {
   has: page.locator("td", { hasText: latestIdnew }),
 });
 
-await expect(row.locator("td").nth(14))
-  .toHaveText("Assigned with findings");
+await expect(row).toContainText("Assigned with findings");
+
+  ~
+  //go to Dashboard.
+
+
+
+//open the Same ID Click on it
+// const IDrow = page.locator("table tbody tr", {
+//   has: page.locator("td", { hasText: latestIdnew }),
+// });
+
+// IDrow.click();
+
+
+
+//click on send for review
+await AutomationFieldOperationAddFinding.FinalReviewButtn();
+
+//find the same IDand check the status Colomn
+const SameID = page.locator("table tbody tr", {
+  has: page.locator("td", { hasText: latestIdnew }),
+});
+
+await expect(SameID.locator("td").nth(15))
+  .toHaveText("In Review with findings");
+
+//logout the User
+   await loginPage.logout();
+
 
 });
+
+
