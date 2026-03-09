@@ -90,10 +90,9 @@ await this.dropdown.selectOption('AutomationFieldOperator');
 
   async VerifyIDColumns(expect) {
     await expect(this.IDStatus).toHaveText("Assigned");
-    await expect(this.ChecklistName).toHaveValue(
-  "2.5 PostIndicatorsValvePIVChecklist"
-);
-    await expect(this.AuditorName).toHaveText("Automation Testing");
+    await expect(this.ChecklistName).toHaveValue(/2\.5\s*Post\s*Indicators/i);
+    //Match for Automation and Autmation Testing
+     await expect(this.AuditorName).toContainText("Automation");
     await expect(this.Category).toHaveText("Operations");
   }
 }

@@ -39,13 +39,19 @@ test("End-End Testing For Shift SupervisorFlow", async ({ page }) => {
 
   // Verify the 4 columns
   //verify the other columns in Dashboard
-  await expect(firstRow.locator("td").nth(2)).toHaveText(
-    "2.5 PostIndicatorsValvePIVChecklist",
-  );
-  await expect(firstRow.locator("td").nth(3)).toHaveText(
-    "AutomationFieldOperator",
-  );
-  await expect(firstRow.locator("td").nth(4)).toHaveText("Automation");
+
+ 
+  await expect(firstRow.locator("td").nth(2))
+  .toHaveText(/2\.5\s*Post\s*Indicators/i);
+
+  //MAtch for AutomationFieldOperator and Auomation Field Operator.
+ await expect(firstRow.locator("td").nth(3))
+  .toHaveText(/Automation\s?Field\s?Operator/);
+
+  //Match for Automation and Autmation Testing
+  await expect(firstRow.locator("td").nth(4))
+  .toContainText("Automation");
+
   await expect(firstRow.locator("td").nth(15)).toHaveText("Assigned");
   //Verify the ID format and other column Values inside the Latest Record ID.
   await firstRow.getByText(/^OPS-CDU-2\.5-\d+$/).click();

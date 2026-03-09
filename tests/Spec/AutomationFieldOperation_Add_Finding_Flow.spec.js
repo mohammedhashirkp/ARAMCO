@@ -2,13 +2,14 @@ const { test, expect } = require("@playwright/test");
 const LoginPage = require("../Pages/LoginPage");
 const AutomationFieldOperation_Add_Finding_Flow = require("../Pages/AutomationFieldOperation_Add_Finding_Flow");
 
-
-
-test("Automation Field Operation Add Finding Flow Working or not ? ", async ({ page }) => {
+test("Automation Field Operation Add Finding Flow Working or not ? ", async ({
+  page,
+}) => {
   const loginPage = new LoginPage(page);
-  const AutomationFieldOperationAddFinding = new AutomationFieldOperation_Add_Finding_Flow(page);
+  const AutomationFieldOperationAddFinding =
+    new AutomationFieldOperation_Add_Finding_Flow(page);
 
-   // Open URL
+  // Open URL
   await loginPage.goto("http://4.213.96.168:5713/");
 
   // Server Config
@@ -16,11 +17,18 @@ test("Automation Field Operation Add Finding Flow Working or not ? ", async ({ p
   // Login as Admin
   await loginPage.login("AutomationFieldOperator", "Automation2026");
 
-   // get rows matching Automation Field Operator
+  // Wait until DOM is fully loaded--------------------------------------------------
+  await page.waitForLoadState("domcontentloaded");
+
+  // click refresh to load data
+  await page.getByRole("button", { name: "Refresh" }).click();
+  //---------------------------------------------------------------------------------
+
+  // get rows matching Automation Field Operator
   const filteredRows = page.locator("table tbody tr", {
-  hasText: "Automation Field Operator",
-  has: page.getByRole("button", { name: "View" }),
-});
+    hasText: "Automation Field Operator",
+    has: page.getByRole("button", { name: "View" }),
+  });
 
   // ensure at least one exists
   await expect(filteredRows.first()).toBeVisible();
@@ -30,83 +38,76 @@ test("Automation Field Operation Add Finding Flow Working or not ? ", async ({ p
   // get ID text
   const latestId = await latestRow.locator("td").nth(1).innerText();
   // remove newline + extra value
-   const latestIdnew = latestId.split("\n")[0].trim();
+  const latestIdnew = latestId.split("\n")[0].trim();
 
   console.log("Latest ID:", latestIdnew);
 
   // click ID
   await latestRow.locator("td").nth(1).click();
-// Uplod Button and adding image.
+  // Uplod Button and adding image.
   await AutomationFieldOperationAddFinding.UploadFunctionality();
 
   //UploadingPhoto
- await AutomationFieldOperationAddFinding.UploadBtnPhotoFunction();
+  await AutomationFieldOperationAddFinding.UploadBtnPhotoFunction();
 
   //Uploading Vidoe
- await AutomationFieldOperationAddFinding.UploadVideoFunction();
+  await AutomationFieldOperationAddFinding.UploadVideoFunction();
 
- //Aploading Audio File
- 
+  //Aploading Audio File
+
   await AutomationFieldOperationAddFinding.AudioUplaodFunctionality();
 
   //Functionality related to New findings.
   await AutomationFieldOperationAddFinding.NewFindingsFunctionality();
 
-// Findings Photo Upload
+  // Findings Photo Upload
   await AutomationFieldOperationAddFinding.UploadBtnPhotoFunctionFindings();
 
-
-//Findings Video Uplaod
+  //Findings Video Uplaod
   await AutomationFieldOperationAddFinding.UploadBtnVideoFunctionFindings();
-
 
   // signature
 
- await AutomationFieldOperationAddFinding.addSignature();
+  await AutomationFieldOperationAddFinding.addSignature();
 
-await AutomationFieldOperationAddFinding.NextStepFunctions();
+  await AutomationFieldOperationAddFinding.NextStepFunctions();
 
+  await page.pause();
 
+  //-------------------------------test this block-----------------Till this all working_good------------------
 
+  //check the same ID Status is correct or not
+  const row = page.locator("table tbody tr", {
+    has: page.locator("td", { hasText: latestIdnew }),
+  });
 
-//-------------------------------test this block-----------------------------------
+   await expect(row.locator("td").nth(15)).toHaveText(
+    "Assigned with findings",
+  );
+  //await expect(row).toContainText("Assigned with findings");
 
-//check the same ID Status is correct or not
-const row = page.locator("table tbody tr", {
-  has: page.locator("td", { hasText: latestIdnew }),
+  //Go to the Same ID
+
+  const IDrow = page.locator("table tbody tr", {
+    has: page.locator("td", { hasText: latestIdnew }),
+  });
+
+  IDrow.click();
+
+  //click on send for review
+  await AutomationFieldOperationAddFinding.FinalReviewButtn();
+
+  //find the same IDand check the status Colomn
+  const SameID = page.locator("table tbody tr", {
+    has: page.locator("td", { hasText: latestIdnew }),
+  });
+
+  await expect(SameID.locator("td").nth(15)).toHaveText(
+    "In Review with findings",
+  );
+
+  await page.pause();
+
+  //logout the User
+  await loginPage.logout();
 });
-
-await expect(row).toContainText("Assigned with findings");
-
-  ~
-  //go to Dashboard.
-
-
-
-//open the Same ID Click on it
-// const IDrow = page.locator("table tbody tr", {
-//   has: page.locator("td", { hasText: latestIdnew }),
-// });
-
-// IDrow.click();
-
-
-
-//click on send for review
-await AutomationFieldOperationAddFinding.FinalReviewButtn();
-
-//find the same IDand check the status Colomn
-const SameID = page.locator("table tbody tr", {
-  has: page.locator("td", { hasText: latestIdnew }),
-});
-
-await expect(SameID.locator("td").nth(15))
-  .toHaveText("In Review with findings");
-
-//logout the User
-   await loginPage.logout();
-
-
-});
-
-
