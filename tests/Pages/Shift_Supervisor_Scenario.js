@@ -71,11 +71,24 @@ async createAssignment(expect) {
 
   await this.NextOptButton2_0.click();
   await this.NextButton2_5.click();
+  
   await this.AssignChecklistButton.click();
 
   await expect(this.dropdown).toBeVisible();
+//-----------------
 
+// await this.page.waitForLoadState("networkidle");
+
+// await expect(this.dropdown).toBeVisible();
+
+// const options = await this.dropdown.locator("option").allTextContents();
+// console.log(options);
+
+//--------
   
+  // wait until option is available
+  // await this.dropdown.locator("option[value='AutomationFieldOperator']")
+  //   .waitFor({ state: "attached" });
 
 await this.dropdown.selectOption('AutomationFieldOperator');
 

@@ -106,15 +106,17 @@ this.submitSignature = page.locator(
   }
 
   async UploadFunctionality() {
-    const [fileChooser] = await Promise.all([
-      this.page.waitForEvent("filechooser"),
-      this.UploadBtn.click(),
-    ]);
+  const [fileChooser] = await Promise.all([
+    this.page.waitForEvent("filechooser"),
+    this.UploadBtn.click(),
+  ]);
 
-    await fileChooser.setFiles(
-      "C:/Users/HASHIR/Pictures/Screenshots/Configuration Attribute.png",
-    );
-  }
+  await fileChooser.setFiles(
+    "C:/Users/HASHIR/Pictures/Screenshots/Configuration Attribute.png"
+  );
+
+  await this.page.waitForTimeout(1000);
+}
   async UploadBtnPhotoFunction() {
     const [fileChooser] = await Promise.all([
       this.page.waitForEvent("filechooser"),

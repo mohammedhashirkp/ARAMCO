@@ -26,7 +26,7 @@ test("Automation Field Operation Add Finding Flow Working or not ? ", async ({
 
   // get rows matching Automation Field Operator
   const filteredRows = page.locator("table tbody tr", {
-    hasText: "Automation Field Operator",
+    hasText:  /Automation\s*Field\s*Operator/i,
     has: page.getByRole("button", { name: "View" }),
   });
 
