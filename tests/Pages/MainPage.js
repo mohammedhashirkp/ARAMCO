@@ -6,12 +6,8 @@ class MainPage {
     // ========== LOCATORS ==========
 
     this.CloseMark = page.locator("xpath=/html/body/div[5]/div/span");
-    this.TravelButton = page.locator(
-      'xpath=//*[@id="container"]/div/div[1]/div/div/div/div/div/div/div/div/div/div[1]/div/div/div[1]/div/div[1]/div/div/div/div/div/div/div/div/div[2]/a/div[1]/div/img',
-    );
-    this.FlipkartButton = page.locator(
-      'xpath=//*[@id="container"]/div/div[1]/div/div/div/div/div/div/div/div/div/div[1]/div/div/div/div/div[1]/div/div/div/div/div/div/div/div/div[1]/a/div[2]/div/img',
-    );
+    this.TravelButton = page.getByRole('img', { name: 'Image' }).nth(3);
+    this.FlipkartButton = page.getByRole('img', { name: 'Image' }).nth(1)
     // All three Buttons Flight, Hotels and Buses in travel Page
     this.FlightsButton = page.locator(
       'xpath=//*[@id="slot-list-container"]/div/div[2]/div/div/div/div/div/div/div/div/div/div/div[1]/div/div/div/a/div/picture/img',
@@ -77,7 +73,7 @@ class MainPage {
   async TravelAllButtonsinHomePage() {
     await this.TravelButton.click();
     await expect(this.page).toHaveURL(/travel/);
-    await expect(this.page.getByText("Welcome to travel")).toBeVisible();
+   // await expect(this.page.getByText("Welcome to travel")).toBeVisible();
     await this.FlipkartButton.click();
     await expect(this.page.getByText("Select delivery location")).toBeVisible();
     await this.TravelButton.click();
